@@ -1,0 +1,29 @@
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.GeneratedMSBuildEditorConfig.editorconfig
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.AssemblyInfoInputs.cache
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.AssemblyInfo.cs
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.csproj.CoreCompileInputs.cache
+/Users/pellekvandal/Helloworld/C# /Console/bin/Debug/net10.0/Console
+/Users/pellekvandal/Helloworld/C# /Console/bin/Debug/net10.0/Console.deps.json
+/Users/pellekvandal/Helloworld/C# /Console/bin/Debug/net10.0/Console.runtimeconfig.json
+/Users/pellekvandal/Helloworld/C# /Console/bin/Debug/net10.0/Console.dll
+/Users/pellekvandal/Helloworld/C# /Console/bin/Debug/net10.0/Console.pdb
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.dll
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/refint/Console.dll
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.pdb
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/Console.genruntimeconfig.cache
+/Users/pellekvandal/Helloworld/C# /Console/obj/Debug/net10.0/ref/Console.dll
+/Users/pellekvandal/Helloworld/C#/Console/bin/Debug/net10.0/Console
+/Users/pellekvandal/Helloworld/C#/Console/bin/Debug/net10.0/Console.deps.json
+/Users/pellekvandal/Helloworld/C#/Console/bin/Debug/net10.0/Console.runtimeconfig.json
+/Users/pellekvandal/Helloworld/C#/Console/bin/Debug/net10.0/Console.dll
+/Users/pellekvandal/Helloworld/C#/Console/bin/Debug/net10.0/Console.pdb
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.GeneratedMSBuildEditorConfig.editorconfig
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.AssemblyInfoInputs.cache
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.AssemblyInfo.cs
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.csproj.CoreCompileInputs.cache
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.dll
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/refint/Console.dll
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.pdb
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.genruntimeconfig.cache
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/ref/Console.dll
+/Users/pellekvandal/Helloworld/C#/Console/obj/Debug/net10.0/Console.sourcelink.json
