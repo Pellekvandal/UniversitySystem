@@ -7,9 +7,19 @@ class Program
     {
         bool running = true;
 
+        // liste med alle kurs
         List<Kurs> kursListe = new List<Kurs>();
+
+        // liste med alle studenter
         List<Student> studentListe = new List<Student>();
 
+        // liste med alle bøker i biblioteket
+        List<Bok> bokListe = new List<Bok>();
+
+        // liste med alle lån
+        List<Laan> laanListe = new List<Laan>();
+
+        // teststudenter så vi kan melde dem på kurs
         studentListe.Add(new Student(1001, "Pelle", "pelle@mail.no"));
         studentListe.Add(new Student(1002, "Mads", "mads@mail.no"));
 
@@ -34,6 +44,7 @@ class Program
             {
                 case "1":
 
+                    // oppretter nytt kurs
                     Console.Write("Skriv kurskode: ");
                     string kode = Console.ReadLine() ?? "";
 
@@ -54,6 +65,7 @@ class Program
 
                 case "2":
 
+                    // melder student til kurs
                     Console.Write("Skriv studentID: ");
                     int studentId = int.Parse(Console.ReadLine() ?? "0");
 
@@ -61,6 +73,8 @@ class Program
                     string kursKode = Console.ReadLine() ?? "";
 
                     Student valgtStudent = null;
+
+                    // finner riktig student
                     foreach (Student s in studentListe)
                     {
                         if (s.StudentId == studentId)
@@ -77,6 +91,8 @@ class Program
                     }
 
                     Kurs valgtKurs = null;
+
+                    // finner riktig kurs
                     foreach (Kurs k in kursListe)
                     {
                         if (k.Kode.Equals(kursKode, StringComparison.OrdinalIgnoreCase))
@@ -92,18 +108,21 @@ class Program
                         break;
                     }
 
+                    // sjekker om kurset har plass
                     if (!valgtKurs.HarPlass())
                     {
                         Console.WriteLine("Kurset er fullt.");
                         break;
                     }
 
+                    // sjekker om studenten allerede er påmeldt
                     if (valgtKurs.Studenter.Contains(valgtStudent.StudentId))
                     {
                         Console.WriteLine("Studenten er allerede meldt på.");
                         break;
                     }
 
+                    // legger studenten på kurset
                     valgtKurs.Studenter.Add(valgtStudent.StudentId);
                     valgtStudent.KursKoder.Add(valgtKurs.Kode);
 
@@ -112,6 +131,7 @@ class Program
 
                 case "3":
 
+                    // printer alle kurs og deltakere
                     if (kursListe.Count == 0)
                     {
                         Console.WriteLine("Ingen kurs registrert.");
@@ -120,7 +140,7 @@ class Program
                     {
                         foreach (Kurs k in kursListe)
                         {
-                            Console.WriteLine(k.Kode + " - " + k.Navn + " (" + k.Studiepoeng + " studiepoeng, maks " + k.MaksPlasser + ")");
+                            Console.WriteLine(k.Kode + " - " + k.Navn);
 
                             if (k.Studenter.Count == 0)
                             {
@@ -129,13 +149,14 @@ class Program
                             else
                             {
                                 Console.WriteLine("Deltakere:");
+
                                 foreach (int id in k.Studenter)
                                 {
                                     foreach (Student s in studentListe)
                                     {
                                         if (s.StudentId == id)
                                         {
-                                            Console.WriteLine("- " + s.StudentId + " " + s.Navn);
+                                            Console.WriteLine("- " + s.Navn);
                                         }
                                     }
                                 }
@@ -149,15 +170,16 @@ class Program
 
                 case "4":
 
+                    // søker etter kurs
                     Console.Write("Søk etter kurskode eller navn: ");
-                    string søk = Console.ReadLine() ?? "";
+                    string sok = Console.ReadLine() ?? "";
 
                     bool funnet = false;
 
                     foreach (Kurs k in kursListe)
                     {
-                        if (k.Kode.Contains(søk, StringComparison.OrdinalIgnoreCase) ||
-                            k.Navn.Contains(søk, StringComparison.OrdinalIgnoreCase))
+                        if (k.Kode.Contains(sok, StringComparison.OrdinalIgnoreCase) ||
+                            k.Navn.Contains(sok, StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine(k.Kode + " - " + k.Navn);
                             funnet = true;
@@ -169,6 +191,160 @@ class Program
                         Console.WriteLine("Ingen kurs funnet.");
                     }
 
+                    break;
+
+                case "5":
+
+                    // søker etter bok i biblioteket
+                    Console.Write("Søk etter boktittel eller forfatter: ");
+                    string bokSok = Console.ReadLine() ?? "";
+
+                    bool bokFunnet = false;
+
+                    foreach (Bok b in bokListe)
+                    {
+                        if (b.Tittel.Contains(bokSok, StringComparison.OrdinalIgnoreCase) ||
+                            b.Forfatter.Contains(bokSok, StringComparison.OrdinalIgnoreCase))
+                        {
+                            Console.WriteLine(b.Id + " - " + b.Tittel + " av " + b.Forfatter);
+                            Console.WriteLine("Tilgjengelige: " + b.TilgjengeligeEksemplarer);
+                            bokFunnet = true;
+                        }
+                    }
+
+                    if (!bokFunnet)
+                    {
+                        Console.WriteLine("Ingen bøker funnet.");
+                    }
+
+                    break;
+
+                case "6":
+
+                    // låner ut bok til student
+                    Console.Write("Skriv studentID: ");
+                    int laanStudentId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Skriv bok-ID: ");
+                    int laanBokId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Student laanStudent = null;
+
+                    // finner studenten som skal låne
+                    foreach (Student s in studentListe)
+                    {
+                        if (s.StudentId == laanStudentId)
+                        {
+                            laanStudent = s;
+                            break;
+                        }
+                    }
+
+                    if (laanStudent == null)
+                    {
+                        Console.WriteLine("Fant ikke student.");
+                        break;
+                    }
+
+                    Bok valgtBok = null;
+
+                    // finner boka som skal lånes
+                    foreach (Bok b in bokListe)
+                    {
+                        if (b.Id == laanBokId)
+                        {
+                            valgtBok = b;
+                            break;
+                        }
+                    }
+
+                    if (valgtBok == null)
+                    {
+                        Console.WriteLine("Fant ikke bok.");
+                        break;
+                    }
+
+                    // stopper utlån hvis ingen eksemplarer er ledige
+                    if (valgtBok.TilgjengeligeEksemplarer <= 0)
+                    {
+                        Console.WriteLine("Ingen tilgjengelige eksemplarer.");
+                        break;
+                    }
+
+                    // reduserer antall tilgjengelige og lagrer lånet
+                    valgtBok.TilgjengeligeEksemplarer--;
+
+                    Laan nyttLaan = new Laan(laanBokId, laanStudentId);
+                    laanListe.Add(nyttLaan);
+
+                    Console.WriteLine("Boken ble lånt ut.");
+                    break;
+
+                case "7":
+
+                    // returnerer bok
+                    Console.Write("Skriv studentID: ");
+                    int returnStudentId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Skriv bok-ID: ");
+                    int returnBokId = int.Parse(Console.ReadLine() ?? "0");
+
+                    bool returnert = false;
+
+                    // finner aktivt lån som matcher student og bok
+                    foreach (Laan l in laanListe)
+                    {
+                        if (l.StudentId == returnStudentId &&
+                            l.BokId == returnBokId &&
+                            l.ReturnertDato == null)
+                        {
+                            l.ReturnertDato = DateTime.Now;
+                            returnert = true;
+
+                            // øker antall tilgjengelige eksemplarer
+                            foreach (Bok b in bokListe)
+                            {
+                                if (b.Id == returnBokId)
+                                {
+                                    b.TilgjengeligeEksemplarer++;
+                                    break;
+                                }
+                            }
+
+                            Console.WriteLine("Boken er returnert.");
+                            break;
+                        }
+                    }
+
+                    if (!returnert)
+                    {
+                        Console.WriteLine("Fant ikke aktivt lån.");
+                    }
+
+                    break;
+
+                case "8":
+
+                    // registrerer ny bok i biblioteket
+                    Console.Write("Skriv bok-ID: ");
+                    int bokId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Skriv tittel: ");
+                    string tittel = Console.ReadLine() ?? "";
+
+                    Console.Write("Skriv forfatter: ");
+                    string forfatter = Console.ReadLine() ?? "";
+
+                    Console.Write("Skriv år: ");
+                    int aar = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Antall eksemplarer: ");
+                    int antall = int.Parse(Console.ReadLine() ?? "0");
+
+                    Bok nyBok = new Bok(bokId, tittel, forfatter, aar, antall);
+                    bokListe.Add(nyBok);
+
+                    Console.WriteLine("Boken ble registrert.");
                     break;
 
                 case "0":
