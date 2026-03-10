@@ -26,6 +26,9 @@ class Program
         studentListe.Add(new Student(1001, "Pelle", "pelle@mail.no"));
         studentListe.Add(new Student(1002, "Mads", "mads@mail.no"));
 
+        // test utvekslingsstudent
+        studentListe.Add(new Utvekslingsstudent(1003, "Elis", "elis@mail.no", "Lund University", "Sverige", "01.08.2026", "15.12.2026"));
+
         // testansatte
         ansattListe.Add(new Ansatt(2001, "Emilie", "emilie@uni.no", "Bibliotekar", "Bibliotek"));
         ansattListe.Add(new Ansatt(2002, "Lars", "lars@uni.no", "Foreleser", "Informatikk"));
@@ -43,6 +46,7 @@ class Program
             Console.WriteLine("[7] Returner bok");
             Console.WriteLine("[8] Registrer bok");
             Console.WriteLine("[9] Vis lån og historikk");
+            Console.WriteLine("[10] Meld student av kurs");
             Console.WriteLine("[0] Avslutt");
 
             Console.Write("Velg et alternativ: ");
@@ -164,7 +168,14 @@ class Program
                                     {
                                         if (s.StudentId == id)
                                         {
-                                            Console.WriteLine("- " + s.Navn);
+                                            if (s is Utvekslingsstudent u)
+                                            {
+                                                Console.WriteLine("- " + u.Navn + " (utveksling fra " + u.Hjemuniversitet + ", " + u.Land + ")");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("- " + s.Navn);
+                                            }
                                         }
                                     }
                                 }
@@ -479,6 +490,65 @@ class Program
                         }
                     }
 
+                    break;
+
+                case "10":
+
+                    // melder student av kurs
+                    Console.Write("Skriv studentID: ");
+                    int avStudentId = int.Parse(Console.ReadLine() ?? "0");
+
+                    Console.Write("Skriv kurskode: ");
+                    string avKursKode = Console.ReadLine() ?? "";
+
+                    Student avStudent = null;
+
+                    // finner studenten
+                    foreach (Student s in studentListe)
+                    {
+                        if (s.StudentId == avStudentId)
+                        {
+                            avStudent = s;
+                            break;
+                        }
+                    }
+
+                    if (avStudent == null)
+                    {
+                        Console.WriteLine("Fant ikke student.");
+                        break;
+                    }
+
+                    Kurs avKurs = null;
+
+                    // finner kurset
+                    foreach (Kurs k in kursListe)
+                    {
+                        if (k.Kode.Equals(avKursKode, StringComparison.OrdinalIgnoreCase))
+                        {
+                            avKurs = k;
+                            break;
+                        }
+                    }
+
+                    if (avKurs == null)
+                    {
+                        Console.WriteLine("Fant ikke kurs.");
+                        break;
+                    }
+
+                    // sjekker om studenten faktisk er på kurset
+                    if (!avKurs.Studenter.Contains(avStudent.StudentId))
+                    {
+                        Console.WriteLine("Studenten er ikke påmeldt dette kurset.");
+                        break;
+                    }
+
+                    // fjerner studenten fra kurset
+                    avKurs.Studenter.Remove(avStudent.StudentId);
+                    avStudent.KursKoder.Remove(avKurs.Kode);
+
+                    Console.WriteLine("Studenten er meldt av kurset.");
                     break;
 
                 case "0":
